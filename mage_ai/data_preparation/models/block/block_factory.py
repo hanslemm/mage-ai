@@ -18,11 +18,6 @@ from mage_ai.data_preparation.models.constants import (
 from mage_ai.data_preparation.models.widget import Widget
 
 
-BLOCK_TYPE_TO_CLASS.update({
-    BlockType.DBT: DBTBlockYAML,
-})
-
-
 class BlockFactory:
     @classmethod
     def block_class_from_type(self, block_type: str, language=None, pipeline=None) -> 'Block':
