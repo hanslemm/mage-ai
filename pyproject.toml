@@ -23,8 +23,11 @@ pandas-stubs = "*"
 flake8-bugbear = "*"
 sourcery = "*"
 
-[tool.isort]
-profile = "black"
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.pydocstyle]
+convention = "google"
 
 [build-system]
 requires = ["setuptools>=42"]
