@@ -53,13 +53,13 @@
     },
     {
       "name": "Mage Pro",
-      "url": "https://www.mage.ai/pro?source=documentation-header"
+      "url": "https://cloud.mage.ai/sign-up?source=documentation-header"
     }
   ],
   "topbarCtaButton": {
     "type": "link",
-    "name": "Demo playground",
-    "url": "https://www.mage.ai/demo",
+    "name": "Get a demo",
+    "url": "https://mage.ai/getdemo",
     "style": "pill",
     "arrow": true
   },
@@ -78,6 +78,10 @@
       "url": "production"
     },
     {
+      "name": "AI",
+      "url": "ai"
+    },
+    {
       "name": "Observability",
       "url": "observability"
     },
@@ -88,10 +92,6 @@
     {
       "name": "Extensibility",
       "url": "extensibility"
-    },
-    {
-      "name": "AI",
-      "url": "ai"
     }
   ],
   "footer": {
@@ -120,7 +120,7 @@
         "links": [
           {
             "label": "Get started for free",
-            "url": "https://www.mage.ai/pro"
+            "url": "https://cloud.mage.ai/sign-up"
           }
         ]
       },
@@ -257,7 +257,7 @@
     },
     {
       "source": "/tutorials/setup-dbt",
-      "destination": "/guides/setup-dbt"
+      "destination": "/guides/dbt/setup-dbt"
     },
     {
       "source": "/tutorials/train-model",
@@ -368,64 +368,92 @@
       "destination": "/production/developing-in-the-cloud/workspaces/overview"
     },
     {
-      "source": "/guides/streaming/destinations/amazon-s3",
-      "destination": "/streaming/destinations/amazon-s3"
+      "source": "/streaming/destinations/amazon-s3",
+      "destination": "/guides/streaming/destinations/amazon-s3"
     },
     {
-      "source": "/guides/streaming/destinations/elasticsearch",
-      "destination": "/streaming/destinations/elasticsearch"
+      "source": "/streaming/destinations/bigquery",
+      "destination": "/guides/streaming/destinations/bigquery"
     },
     {
-      "source": "/guides/streaming/destinations/azure_data_lake",
-      "destination": "/streaming/destinations/azure_data_lake"
+      "source": "/streaming/destinations/clickhouse",
+      "destination": "/guides/streaming/destinations/clickhouse"
     },
     {
-      "source": "/guides/streaming/destinations/dummy",
-      "destination": "/streaming/destinations/dummy"
+      "source": "/streaming/destinations/duckdb",
+      "destination": "/guides/streaming/destinations/duckdb"
     },
     {
-      "source": "/guides/streaming/destinations/kafka",
-      "destination": "/streaming/destinations/kafka"
+      "source": "/streaming/destinations/dummy",
+      "destination": "/guides/streaming/destinations/dummy"
     },
     {
-      "source": "/guides/streaming/destinations/kinesis",
-      "destination": "/streaming/destinations/kinesis"
+      "source": "/streaming/destinations/elasticsearch",
+      "destination": "/guides/streaming/destinations/elasticsearch"
     },
     {
-      "source": "/guides/streaming/destinations/mongodb",
-      "destination": "/streaming/destinations/mongodb"
+      "source": "/streaming/destinations/kafka",
+      "destination": "/guides/streaming/destinations/kafka"
     },
     {
-      "source": "/guides/streaming/destinations/opensearch",
-      "destination": "/streaming/destinations/opensearch"
+      "source": "/streaming/destinations/kinesis",
+      "destination": "/guides/streaming/destinations/kinesis"
     },
     {
-      "source": "/guides/streaming/destinations/redshift",
-      "destination": "/streaming/destinations/redshift"
+      "source": "/streaming/destinations/mongodb",
+      "destination": "/guides/streaming/destinations/mongodb"
     },
     {
-      "source": "/guides/streaming/overview",
-      "destination": "/streaming/overview"
+      "source": "/streaming/destinations/mssql",
+      "destination": "/guides/streaming/destinations/mssql"
     },
     {
-      "source": "/guides/streaming/sources/amazon-sqs",
-      "destination": "/streaming/sources/amazon-sqs"
+      "source": "/streaming/destinations/mysql",
+      "destination": "/guides/streaming/destinations/mysql"
     },
     {
-      "source": "/guides/streaming/sources/azure-event-hub",
-      "destination": "/streaming/sources/azure-event-hub"
+      "source": "/streaming/destinations/opensearch",
+      "destination": "/guides/streaming/destinations/opensearch"
     },
     {
-      "source": "/guides/streaming/sources/google-cloud-pubsub",
-      "destination": "/streaming/sources/google-cloud-pubsub"
+      "source": "/streaming/destinations/postgres",
+      "destination": "/guides/streaming/destinations/postgres"
     },
     {
-      "source": "/guides/streaming/sources/kafka",
-      "destination": "/streaming/sources/kafka"
+      "source": "/streaming/destinations/redshift",
+      "destination": "/guides/streaming/destinations/redshift"
     },
     {
-      "source": "/guides/streaming/sources/kinesis",
-      "destination": "/streaming/sources/kinesis"
+      "source": "/streaming/destinations/snowflake",
+      "destination": "/guides/streaming/destinations/snowflake"
+    },
+    {
+      "source": "/streaming/destinations/trino",
+      "destination": "/guides/streaming/destinations/trino"
+    },
+    {
+      "source": "/streaming/sources/amazon-sqs",
+      "destination": "/guides/streaming/sources/amazon-sqs"
+    },
+    {
+      "source": "/streaming/sources/azure-event-hub",
+      "destination": "/guides/streaming/sources/azure-event-hub"
+    },
+    {
+      "source": "/streaming/sources/google-cloud-pubsub",
+      "destination": "/guides/streaming/sources/google-cloud-pubsub"
+    },
+    {
+      "source": "/streaming/sources/kafka",
+      "destination": "/guides/streaming/sources/kafka"
+    },
+    {
+      "source": "/streaming/sources/kinesis",
+      "destination": "/guides/streaming/sources/kinesis"
+    },
+    {
+      "source": "/guides/streaming-pipeline-rabbitmq",
+      "destination": "/guides/streaming/tutorials/streaming-pipeline-rabbitmq"
     },
     {
       "source": "/data-integrations/sources/adapt-existing-source",
@@ -442,6 +470,10 @@
     {
       "source": "/development/git/generate-an-ssh-token",
       "destination": "/development/git/configure#generate-ssh-token"
+    },
+    {
+      "source": "/development/git/configure",
+      "destination": "/guides/git/configure"
     },
     {
       "source": "/production/data-sync/github",
@@ -719,12 +751,15 @@
         "guides/developer-ux/file-browser",
         "guides/developer-ux/code-browser",
         "guides/developer-ux/sidekick",
-        "guides/developer-ux/personalize"
+        "guides/developer-ux/personalize",
+        "guides/developer-ux/workspaces",
+        "guides/developer-ux/visual-studio-code"
       ]
     },
     {
       "group": "Version control",
       "pages": [
+        "guides/data-sync/version-control-guide",
         "guides/git/configure",
         "guides/data-sync/version-control",
         "guides/data-sync/git-sync",
@@ -761,7 +796,7 @@
           "group": "Streaming",
           "icon": "water",
           "pages": [
-            "guides/streaming/overview",
+            "guides/streaming/introduction",
             {
               "group": "Sources",
               "pages": [
@@ -865,7 +900,8 @@
         "production/ci-cd/local-cloud/github-actions",
         "production/ci-cd/local-cloud/gitlab-ci-cd",
         "production/ci-cd/local-cloud/buildkite",
-        "production/ci-cd/mage/pro"
+        "production/ci-cd/mage/pro",
+        "production/configuring-production-settings/overview"
       ]
     },
     {
@@ -935,29 +971,31 @@
       ]
     },
     {
-      "group": "Settings",
+      "group": "Secret manager",
       "pages": [
-        "production/configuring-production-settings/overview",
-        {
-          "group": "Authentication",
-          "icon": "passport",
-          "pages": [
-            "production/authentication/overview",
-            "production/authentication/okta",
-            "production/authentication/microsoft",
-            "production/authentication/google",
-            "production/authentication/ldap"
-          ]
-        },
-        {
-          "group": "Secrets",
-          "icon": "lock",
-          "pages": [
-            "production/deploying-to-cloud/secrets/AWS",
-            "production/deploying-to-cloud/secrets/Azure",
-            "production/deploying-to-cloud/secrets/GCP"
-          ]
-        }
+        "production/deploying-to-cloud/secrets/mage",
+        "production/deploying-to-cloud/secrets/AWS",
+        "production/deploying-to-cloud/secrets/Azure",
+        "production/deploying-to-cloud/secrets/GCP"
+      ]
+    },
+    {
+      "group": "Authentication",
+      "pages": [
+        "production/authentication/overview",
+        "production/authentication/okta",
+        "production/authentication/microsoft",
+        "production/authentication/google",
+        "production/authentication/ldap",
+        "production/authentication/permissions/overview",
+        "production/authentication/permissions/roles",
+        "production/authentication/permissions/permissions"
+      ]
+    },
+    {
+      "group": "AI Sidekick",
+      "pages": [
+        "ai/sidekick/index"
       ]
     },
     {
@@ -975,12 +1013,6 @@
         "ai/ml/train-model",
         "ai/rag-pipeline",
         "ai/custom-resources"
-      ]
-    },
-    {
-      "group": "AI Sidekick",
-      "pages": [
-        "ai/sidekick"
       ]
     },
     {
@@ -1104,6 +1136,13 @@
       "pages": [
         "extensibility/global-hooks/overview",
         "extensibility/global-hooks/guides"
+      ]
+    },
+    {
+      "group": "Environment-specific configuration",
+      "pages": [
+        "extensibility/env-config/project",
+        "extensibility/env-config/pipeline"
       ]
     },
     {

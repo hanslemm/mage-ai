@@ -1,5 +1,6 @@
 import logging
 import os
+from functools import wraps
 from urllib.parse import parse_qs, quote_plus, urlparse
 
 import sqlalchemy
@@ -13,7 +14,7 @@ from mage_ai.orchestration.db.setup import get_postgres_connection_url
 from mage_ai.orchestration.db.utils import get_user_info_from_db_connection_url
 from mage_ai.settings import OTEL_EXPORTER_OTLP_ENDPOINT
 from mage_ai.settings.repo import get_variables_dir
-from mage_ai.shared.environments import is_debug, is_test
+from mage_ai.shared.environments import is_debug, is_test_mage
 
 DB_RETRY_COUNT = 2
 TEST_DB = 'test.db'
@@ -28,7 +29,7 @@ db_kwargs = dict(
 if OTEL_EXPORTER_OTLP_ENDPOINT:
     from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
 
-if is_test():
+if is_test_mage():
     db_connection_url = f'sqlite:///{TEST_DB}'
     db_kwargs['connect_args']['check_same_thread'] = False
 elif not db_connection_url:
@@ -37,7 +38,7 @@ elif not db_connection_url:
     if pg_db_connection_url:
         db_connection_url = pg_db_connection_url
     else:
-        if is_test():
+        if is_test_mage():
             db_connection_url = f'sqlite:///{TEST_DB}'
         elif os.path.exists(os.path.join('mage_ai', 'orchestration', 'db')):
             # For local dev environment
@@ -167,6 +168,25 @@ def safe_db_query(func):
                 retry_count += 1
 
     return func_with_rollback
+
+
+def safe_db_query_async(func):
+    @wraps(func)
+    async def func_with_rollback_async(*args, **kwargs):
+        retry_count = 0
+        while True:
+            try:
+                return await func(*args, **kwargs)
+            except (
+                sqlalchemy.exc.OperationalError,
+                sqlalchemy.exc.PendingRollbackError,
+                sqlalchemy.exc.InternalError,
+            ) as e:
+                db_connection.session.rollback()
+                if retry_count >= DB_RETRY_COUNT:
+                    raise e
+                retry_count += 1
+    return func_with_rollback_async
 
 
 logging.basicConfig()

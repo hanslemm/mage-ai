@@ -29,7 +29,8 @@ from mage_ai.orchestration.db.models.tags import (
 )
 from mage_ai.settings.platform import project_platform_activated
 from mage_ai.settings.repo import get_repo_path
-from mage_ai.shared.hash import merge_dict
+from mage_ai.settings.server import HIDE_API_TRIGGER_TOKEN
+from mage_ai.shared.hash import ignore_keys, merge_dict
 
 
 class PipelineScheduleResource(DatabaseResource):
@@ -282,6 +283,7 @@ class PipelineScheduleResource(DatabaseResource):
 
     @safe_db_query
     def update(self, payload, **kwargs):
+        # Update associated event matchers
         arr = payload.pop('event_matchers', None)
         event_matchers = []
         if arr is not None:
@@ -320,6 +322,7 @@ class PipelineScheduleResource(DatabaseResource):
                 ]
                 em.update(pipeline_schedules=ps)
 
+        # Update associated tags
         tag_names = payload.pop('tags', None)
         if tag_names is not None:
             # 1. Fetch all tag associations
@@ -408,7 +411,11 @@ class PipelineScheduleResource(DatabaseResource):
 
         old_name = self.model.name
 
-        resource = super().update(payload)
+        # Rotate token
+        if payload.get('rotate_token'):
+            payload['token'] = uuid.uuid4().hex
+
+        resource = super().update(ignore_keys(payload, ['rotate_token']))
         updated_model = resource.model
 
         repo_path = get_repo_path(user=self.current_user)
@@ -424,9 +431,10 @@ class PipelineScheduleResource(DatabaseResource):
                 sla=updated_model.sla,
                 start_time=updated_model.start_time,
                 status=updated_model.status,
-                token=updated_model.token,
                 variables=updated_model.variables,
             )
+            if not HIDE_API_TRIGGER_TOKEN:
+                trigger.token = updated_model.token
 
             update_only_if_exists = (
                 not pipeline.should_save_trigger_in_code_automatically()

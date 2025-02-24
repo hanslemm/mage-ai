@@ -14,6 +14,7 @@ from mage_ai.io.config import BaseConfigLoader, ConfigKey
 from mage_ai.io.constants import UNIQUE_CONFLICT_METHOD_UPDATE
 from mage_ai.io.export_utils import PandasTypes
 from mage_ai.io.sql import BaseSQL
+from mage_ai.shared.hash import extract
 from mage_ai.shared.parsers import encode_complex
 
 MERGE_TABLE_SQL = '''MERGE {table_name} AS t
@@ -197,9 +198,11 @@ class MSSQL(BaseSQL):
                 TrustServerCertificate='yes',
             ),
         )
+        conn_kwargs = extract(kwargs, ['pool_size', 'max_overflow'])
         engine = create_engine(
             connection_url,
             fast_executemany=True,
+            **conn_kwargs,
         )
 
         unique_conflict_method = kwargs.get('unique_conflict_method')
@@ -242,6 +245,7 @@ class MSSQL(BaseSQL):
                     method=merge_table,
                 )
                 return
+        sql_kwargs = extract(kwargs, ['chunksize', 'method'])
 
         df.to_sql(
             table_name,
@@ -249,6 +253,7 @@ class MSSQL(BaseSQL):
             schema=schema_name,
             if_exists=if_exists or ExportWritePolicy.REPLACE,
             index=False,
+            **sql_kwargs,
         )
 
     def get_type(self, column: Series, dtype: str) -> str:

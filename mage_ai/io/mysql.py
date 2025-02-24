@@ -25,6 +25,7 @@ class MySQL(BaseSQL):
         password: str,
         user: str,
         port: int = 3306,
+        allow_local_infile: bool = False,
         verbose: bool = True,
         **kwargs,
     ) -> None:
@@ -35,18 +36,22 @@ class MySQL(BaseSQL):
             port=port or 3306,
             user=user,
             verbose=verbose,
+            allow_local_infile=allow_local_infile,
             **kwargs,
         )
 
     @classmethod
     def with_config(cls, config: BaseConfigLoader) -> 'MySQL':
-        return cls(
+        conn_kwargs = dict(
             database=config[ConfigKey.MYSQL_DATABASE],
             host=config[ConfigKey.MYSQL_HOST],
             password=config[ConfigKey.MYSQL_PASSWORD],
             port=config[ConfigKey.MYSQL_PORT],
             user=config[ConfigKey.MYSQL_USER],
         )
+        if config[ConfigKey.MYSQL_ALLOW_LOCAL_INFILE] is not None:
+            conn_kwargs['allow_local_infile'] = config[ConfigKey.MYSQL_ALLOW_LOCAL_INFILE]
+        return cls(**conn_kwargs)
 
     def build_create_table_command(
         self,
